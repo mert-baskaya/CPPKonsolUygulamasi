@@ -49,18 +49,18 @@ Sekil* lSekliAsagiGotur(Sekil*, int);
 int main() {
 	/* Rastgele zaman tohumu */
 	srand(time(NULL));
-	
+
 	/* Gerekli değişken tanımlamaları */
 	char chars[] = { '*', '#', '$', '+', '@' };
 	int genislik[] = { 30, 40, 50 };
 	int sahneGenisligi = genislik[rand() % 3];
 	int sahneYuksekligi = rand() % 11 + 20;
 	char sahneKarakteri = chars[rand() % 5];
-	
+
 	/* Sahne ve Sekil nesnelerinin oluşturulması */
 	Sahne* sahne = new Sahne(sahneGenisligi, sahneYuksekligi, sahneKarakteri);
 	Sekil* sekil = lSekliOlustur();
-	
+
 	/* Uygulamanın istenilen biçimde çalışmasını sağlayan sonsuz while döngüsü */
 	while (true) {
 
@@ -83,7 +83,7 @@ void koordinatAta(int x, int y) {
 
 /* Sahne çizen fonksiyon */
 void sahneCiz(Sahne* sahne) {
-	
+
 	/*Sağ->Aşağı->Sol->Yukarı şeklinde çalışan sahne çizimi döngüleri*/
 	for (int i = 0; i < sahne->genislik; i++) {
 		cout << sahne->karakter;
@@ -112,7 +112,7 @@ Sekil* lSekliOlustur() {
 	int boyut = rand() % 6 + 2;
 	int y = 3;
 	int x = rand() % 21 + 5;
-	
+
 	/* Sekil nesnesinin oluşturulması*/
 	Sekil* sekil = new Sekil(x, y, boyut, lSekliKarakteri);
 
@@ -127,19 +127,19 @@ void lSekliCiz(Sekil* sekil) {
 	char krk = sekil->karakter;
 
 	/* Önce soldan aşağı inerek, sağ, yukarı, sol, yukarı, sol şeklinde ilerleyerek şekli çizer */
-	for (int i = 0; i < boyut + 1; i++) {
+	for (int i = 0; i < boyut; i++) {
 		koordinatAta(x, y);
 		cout << krk;
 		y++;
 	}
 
-	for (int i = 0; i < boyut; i++) {
+	for (int i = 0; i < boyut-1; i++) {
 		koordinatAta(x, y);
 		cout << krk;
 		x++;
 	}
-
-	for (int i = 0; i < (boyut + 1) / 2; i++) {
+	
+	for (int i = 0; i < (boyut) / 2; i++) {
 		koordinatAta(x, y);
 		cout << krk;
 		y--;
@@ -151,22 +151,28 @@ void lSekliCiz(Sekil* sekil) {
 		x--;
 	}
 
-	for (int i = 0; i < (boyut + 1) / 2 + 1; i++) {
-		koordinatAta(x, y);
-		cout << krk;
-		y--;
-	}
+	
 
 	/* Şeklin boyutu tek ve çift olursa şeklin tamamın çizilemeyeceği durum oluşuyor, bundan ötürü aşağıdaki şekilde kontrol sağladım */
 	if (boyut % 2 == 0) {
-		for (int i = 0; i < boyut / 2 + 1; i++) {
+		for (int i = 0; i < (boyut) / 2; i++) {
+			koordinatAta(x, y);
+			cout << krk;
+			y--;
+		}
+		for (int i = 0; i < boyut / 2; i++) {
 			koordinatAta(x, y);
 			cout << krk;
 			x--;
 		}
 	}
 	else {
-		for (int i = 0; i < boyut / 2 + 2; i++) {
+		for (int i = 0; i < (boyut) / 2+1; i++) {
+			koordinatAta(x, y);
+			cout << krk;
+			y--;
+		}
+		for (int i = 0; i < boyut / 2 + 1; i++) {
 			koordinatAta(x, y);
 			cout << krk;
 			x--;
